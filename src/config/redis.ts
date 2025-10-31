@@ -1,4 +1,5 @@
 import Redis from "ioredis";
+import { config } from "./env.js";
 
 // export const redis = new Redis({
 //     host: 'localhost',
@@ -16,12 +17,17 @@ import Redis from "ioredis";
 //     connectTimeout: 10000,
 //     retryDelayOnFailover: 1000,
 // });
-export const redis = new Redis('redis://default:3U8n7gywZl9ebYu7ReSYJVa1GLd1J9vx@redis-13633.c17.us-east-1-4.ec2.redns.redis-cloud.com:13633');
+export const redis = new Redis(config.redis.url, {
+    maxRetriesPerRequest: 3,
+    connectTimeout: 10000,
+    lazyConnect: false
+});
 
 redis.on('connect', () => console.log(' Redis client connected'));
 redis.on('ready', () => console.log(' Redis client ready'));
 redis.on('error', (err) => console.error('Redis connection error:', err));
 redis.on('close', () => console.log(' Redis client closed'));
+redis.on('reconnecting', () => console.log(' Redis client reconnecting'));
 
 redis.ping().then(() => {
     console.log(' Redis ping successful');

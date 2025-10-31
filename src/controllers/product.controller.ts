@@ -1,7 +1,5 @@
 import { Request, Response } from "express";
 import { Product } from "../models/product.model.js";
-import { redis } from "../config/redis.js";
-import { cacheDel, cacheGet, cacheSet, generateCacheKey } from "../services/cache.service.js";
 
 const createProduct = async (req: Request, res: Response) => {
     try {
@@ -21,44 +19,31 @@ const createProduct = async (req: Request, res: Response) => {
 
         await product.save();
 
-        await cacheDel('products:*');
-        await cacheDel(`user:${userId}:products`);
-
         return res.status(201).json({
             success: true,
             message: "Product created successfully",
             product
         });
-
     } catch (err) {
         return res.status(500).json({
             success: false,
             message: "Internal Server Error"
-        })
+        });
     }
 }
 
 const getProducts = async (req: Request, res: Response) => {
-    const { page = 1, limit = 10 } = req.query;
-    const cacheKey = generateCacheKey('products', 'all', String(page), String(limit));
-
     try {
-        const cached = await cacheGet(cacheKey);
-        if (cached) {
-            console.log(`Cache hit for key: ${cacheKey}`);
-            return res.json({
-                ...cached,
-                source: 'cache'
-            });
-        }
-
+        const { page = 1, limit = 10 } = req.query;
         const skip = (Number(page) - 1) * Number(limit);
+
         const products = await Product.find().skip(skip).limit(Number(limit)).sort({ createdAt: -1 });
 
         const total = await Product.countDocuments();
 
-        const result = {
+        return res.status(200).json({
             success: true,
+            message: "Products fetched successfully",
             products,
             pagination: {
                 page: Number(page),
@@ -66,48 +51,26 @@ const getProducts = async (req: Request, res: Response) => {
                 total,
                 pages: Math.ceil(total / Number(limit))
             }
-        };
-
-        await cacheSet(cacheKey, result, 600);
-        console.log('Cached: ', cacheKey);
-
-        return res.json({ ...result, source: 'database' });
+        });
     } catch (err) {
         return res.status(500).json({
             success: false,
             message: "Internal Server Error"
-        })
+        });
     }
 }
 
 const getProductsByUser = async (req: Request, res: Response) => {
-    const { userId } = req.params;
-    const cacheKey = generateCacheKey('user', userId, 'products');
-
     try {
-        const cached = await cacheGet(cacheKey);
-        if (cached) {
-            console.log(`Cache hit for key: ${cacheKey}`);
-            return res.json({
-                ...cached,
-                source: 'cache'
-            });
-        }
+        const { userId } = req.params;
+
         const products = await Product.find({ userId });
 
-        const result = {
+        return res.status(200).json({
             success: true,
-            products,
-            count: products.length
-        };
-
-        await cacheSet(cacheKey, result, 600);
-        console.log('Cached: ', cacheKey)
-
-        return res.json({
-            ...result, source: 'database'
+            message: "Products fetched successfully",
+            products
         });
-
     } catch (err) {
         return res.status(500).json({
             success: false,
@@ -117,18 +80,8 @@ const getProductsByUser = async (req: Request, res: Response) => {
 }
 
 const getProductById = async (req: Request, res: Response) => {
-    const { productId } = req.params;
-    const cacheKey = generateCacheKey('product', productId);
-
     try {
-        const cached = await cacheGet(cacheKey);
-        if (cached) {
-            console.log(`Cache hit for key: ${cacheKey}`);
-            return res.json({
-                ...cached,
-                source: 'cache'
-            });
-        }
+        const { productId } = req.params;
 
         const product = await Product.findById(productId);
 
@@ -139,19 +92,11 @@ const getProductById = async (req: Request, res: Response) => {
             });
         }
 
-        const result = {
+        return res.status(200).json({
             success: true,
+            message: "Product fetched successfully",
             product
-        };
-
-        await cacheSet(cacheKey, result, 600);
-        console.log('Cached: ', cacheKey);
-
-        return res.json({
-            ...result,
-            source: 'database'
         });
-
     } catch (err) {
         return res.status(500).json({
             success: false,

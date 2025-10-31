@@ -1,21 +1,30 @@
 import express from 'express';
 import userRouter from './routes/user.route.js';
 import productRouter from './routes/product.route.js';
+import healthRouter from './routes/health.route.js';
+import demoRouter from './routes/demo.route.js';
 import { connectDB } from './config/database.js';
-import dotenv from 'dotenv';
+import { config } from './config/env.js';
+import { rateLimitMiddleware } from './middlewares/rate-limit.middleware.js';
 
-dotenv.config();
 
 const app = express();
-const port = process.env.PORT || 3000;
 
-app.use(express.json());
+app.use(express.json({ limit: '10mb' }));
+app.use(rateLimitMiddleware(60000, 100));
 
 connectDB();
 
+app.use('/api/v1/health', healthRouter);
 app.use('/api/v1/users', userRouter);
 app.use('/api/v1/products', productRouter);
+app.use('/api/v1/demo', demoRouter);
 
-app.listen(port, () => {
-    console.log(`Server is running on port ${port}`);
+app.use((err: any, req: any, res: any, next: any) => {
+    console.error(err.stack);
+    res.status(500).json({ error: 'Something went wrong!' });
+});
+
+app.listen(config.port, () => {
+    console.log(`Server is running on port ${config.port}`);
 });

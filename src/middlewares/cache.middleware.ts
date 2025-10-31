@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from "express"
-import { cacheGet, cacheSet, generateCacheKey } from "../services/cache.service"
+import { cacheGet, cacheSet, generateCacheKey } from "../services/cache.service.js"
 
 
 export const cacheMiddleware = (keyPrefix: string, ttl?: number) => {
@@ -10,7 +10,7 @@ export const cacheMiddleware = (keyPrefix: string, ttl?: number) => {
 
         if (cached) {
             console.log(`Cache hit for key: ${cacheKey}`);
-            return res.json({
+            return res.status(200).json({
                 ...cached,
                 source: 'cache'
             });
