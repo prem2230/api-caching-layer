@@ -213,9 +213,6 @@ redis-cli monitor
 # Check MongoDB performance
 db.runCommand({serverStatus: 1})
 
-bash
-Development
-Available Scripts
 Script	Description
 npm run dev	Start development server with hot reload
 npm run build	Build TypeScript to JavaScript
@@ -248,25 +245,9 @@ mongosh --eval "db.adminCommand('ping')"
 
 # Start MongoDB
 mongod
+```
 
-bash
-Port Already in Use
-# Find process using port 4000
-lsof -i :4000
-
-# Kill process
-kill -9 <PID>
-
-bash
-Debug Mode
-# Enable debug logging
-DEBUG=* npm run dev
-
-# Redis debug
-DEBUG=ioredis:* npm run dev
-
-
-Contributing
+## Contributing
 Fork the repository
 
 Create a feature branch (git checkout -b feature/amazing-feature)
@@ -277,7 +258,7 @@ Push to the branch (git push origin feature/amazing-feature)
 
 Open a Pull Request
 
-Acknowledgments
+## Acknowledgments
 Express.js - Fast, unopinionated web framework
 
 Redis - In-memory data structure store
@@ -290,7 +271,6 @@ Mongoose - MongoDB object modeling for Node.js
 
 Built using Node.js, TypeScript, Redis, and MongoDB
 
-```
 ## License
 
 [Prem](https://github.com/prem2230)
