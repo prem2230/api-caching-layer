@@ -2,26 +2,26 @@
 
 A high-performance Node.js REST API built with TypeScript, featuring Redis caching, MongoDB integration, rate limiting, and comprehensive middleware support for scalable applications.
 
-## 🚀 Features
+## Features
 
-- **🔥 Redis Caching**: Intelligent caching with automatic compression and configurable TTL
-- **📊 MongoDB Integration**: Mongoose ODM with robust connection management
-- **🛡️ Rate Limiting**: IP-based rate limiting with Redis backend storage
-- **⚡ TypeScript**: Full type safety with modern ES modules
-- **🔧 Middleware Stack**: Cache, rate limiting, and comprehensive error handling
-- **💊 Health Monitoring**: Real-time API and service health checks
-- **📈 Performance Analytics**: Cache hit/miss ratio tracking and performance metrics
-- **🗜️ Data Compression**: Automatic gzip compression for large payloads
-- **🔐 Environment Configuration**: Centralized configuration management
+- **Redis Caching**: Intelligent caching with automatic compression and configurable TTL
+- **MongoDB Integration**: Mongoose ODM with robust connection management
+- **Rate Limiting**: IP-based rate limiting with Redis backend storage
+- **TypeScript**: Full type safety with modern ES modules
+- **Middleware Stack**: Cache, rate limiting, and comprehensive error handling
+- **Health Monitoring**: Real-time API and service health checks
+- **Performance Analytics**: Cache hit/miss ratio tracking and performance metrics
+- **Data Compression**: Automatic gzip compression for large payloads
+- **Environment Configuration**: Centralized configuration management
 
-## 📋 Prerequisites
+## Prerequisites
 
 - **Node.js** 18+ 
 - **MongoDB** 4.4+
 - **Redis** 6.0+
 - **npm** or **yarn**
 
-## 🛠️ Installation
+## Installation
 
 ```bash
 # Clone the repository
@@ -36,11 +36,7 @@ cp .env.example .env
 # Edit .env with your configuration
 
 
-Copy
-
-Insert at cursor
-markdown
-⚙️ Environment Configuration
+# Environment Configuration
 Create a .env file in the root directory:
 
 # Server Configuration
@@ -76,7 +72,8 @@ CACHE_COMPRESSION_THRESHOLD	Compression threshold in bytes	2048
 API_BASE_URL	Base URL for API	-
 RATE_LIMIT_WINDOW_MS	Rate limit window in milliseconds	60000
 RATE_LIMIT_MAX_REQUESTS	Max requests per window	100
-🚀 Running the Application
+
+Running the Application
 # Development mode with hot reload
 npm run dev
 
@@ -95,27 +92,14 @@ npm run test-performance
 # View cache analytics
 npm run cache-stats
 
-📚 API Documentation
+API Documentation
 Base URL
 http://localhost:4000/api/v1
 
-🏥 Health Check
+Health Check
 GET /health
 
-http
-Response:
-
-{
-  "status": "ok",
-  "timestamp": "2024-01-15T10:30:00.000Z",
-  "services": {
-    "redis": "healthy",
-    "mongodb": "healthy"
-  }
-}
-
-json
-👥 User Endpoints
+User Endpoints
 Register User
 POST /users/register
 Content-Type: application/json
@@ -136,7 +120,7 @@ Content-Type: application/json
 }
 
 http
-🛍️ Product Endpoints
+Product Endpoints
 Create Product
 POST /products/create
 Content-Type: application/json
@@ -159,48 +143,10 @@ GET /products/get-product/:productId
 Get Products by User (Cached - 5 minutes)
 GET /products/get-products-by-user/:userId
 
-🧪 Demo Endpoints
+Demo Endpoints
 GET /demo/cache-test
 
-http
-🗂️ Project Structure
-api-caching-layer/
-├── src/
-│   ├── config/              # Configuration files
-│   │   ├── database.ts      # MongoDB connection setup
-│   │   ├── env.ts          # Environment variables configuration
-│   │   └── redis.ts        # Redis connection setup
-│   ├── controllers/         # Route controllers
-│   │   ├── product.controller.ts
-│   │   └── user.controller.ts
-│   ├── middlewares/         # Express middlewares
-│   │   ├── cache.middleware.ts
-│   │   └── rate-limit.middleware.ts
-│   ├── models/             # Mongoose data models
-│   │   ├── product.model.ts
-│   │   └── user.model.ts
-│   ├── routes/             # API route definitions
-│   │   ├── demo.route.ts
-│   │   ├── health.route.ts
-│   │   ├── product.route.ts
-│   │   └── user.route.ts
-│   ├── services/           # Business logic services
-│   │   └── cache.service.ts
-│   ├── types/              # TypeScript type definitions
-│   │   ├── env-types.ts
-│   │   └── schema-types.ts
-│   ├── utils/              # Utility functions
-│   │   ├── cache-analytics.ts
-│   │   ├── performance-test.ts
-│   │   └── seed.ts
-│   └── server.ts           # Application entry point
-├── .env                    # Environment variables
-├── .gitignore             # Git ignore rules
-├── package.json           # Project dependencies
-├── tsconfig.json          # TypeScript configuration
-└── README.md              # Project documentation
-
-🔄 Caching Strategy
+Caching Strategy
 Cache TTL Levels
 export const TTL = {
     SHORT: 300,        // 5 minutes
@@ -229,7 +175,7 @@ Prefix: gzip: for compressed data
 
 Benefit: 60-80% size reduction for large payloads
 
-🛡️ Rate Limiting
+Rate Limiting
 Window: 60 seconds (configurable)
 
 Limit: 100 requests per IP (configurable)
@@ -242,7 +188,7 @@ X-RateLimit-Limit: Maximum requests allowed
 
 X-RateLimit-Remaining: Remaining requests in current window
 
-📊 Performance Metrics
+Performance Metrics
 Typical Performance
 Cache Hit Ratio: ~85% for read operations
 
@@ -268,7 +214,7 @@ redis-cli monitor
 db.runCommand({serverStatus: 1})
 
 bash
-🔧 Development
+Development
 Available Scripts
 Script	Description
 npm run dev	Start development server with hot reload
@@ -286,7 +232,7 @@ Async/Await: Promise-based asynchronous code
 
 Error Handling: Comprehensive try-catch blocks
 
-🐛 Troubleshooting
+Troubleshooting
 Common Issues
 Redis Connection Failed
 # Check Redis status
@@ -320,7 +266,7 @@ DEBUG=* npm run dev
 DEBUG=ioredis:* npm run dev
 
 bash
-🤝 Contributing
+Contributing
 Fork the repository
 
 Create a feature branch (git checkout -b feature/amazing-feature)
@@ -331,10 +277,10 @@ Push to the branch (git push origin feature/amazing-feature)
 
 Open a Pull Request
 
-📄 License
+License
 This project is licensed under the ISC License - see the LICENSE file for details.
 
-🙏 Acknowledgments
+Acknowledgments
 Express.js - Fast, unopinionated web framework
 
 Redis - In-memory data structure store
@@ -345,7 +291,4 @@ TypeScript - Typed superset of JavaScript
 
 Mongoose - MongoDB object modeling for Node.js
 
-Built with ❤️ using Node.js, TypeScript, Redis, and MongoDB
-
-
-This comprehensive README includes all the essential information about your project, from setup to deployment, with proper formatting and detailed explanations.
+Built using Node.js, TypeScript, Redis, and MongoDB
