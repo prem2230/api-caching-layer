@@ -25,7 +25,7 @@ A high-performance Node.js REST API built with TypeScript, featuring Redis cachi
 
 ```bash
 # Clone the repository
-git clone <your-repository-url>
+git clone https://github.com/prem2230/api-caching-layer
 cd api-caching-layer
 
 # Install dependencies
@@ -265,7 +265,7 @@ DEBUG=* npm run dev
 # Redis debug
 DEBUG=ioredis:* npm run dev
 
-bash
+
 Contributing
 Fork the repository
 
@@ -276,9 +276,6 @@ Commit your changes (git commit -m 'Add amazing feature')
 Push to the branch (git push origin feature/amazing-feature)
 
 Open a Pull Request
-
-License
-This project is licensed under the ISC License - see the LICENSE file for details.
 
 Acknowledgments
 Express.js - Fast, unopinionated web framework
@@ -292,3 +289,8 @@ TypeScript - Typed superset of JavaScript
 Mongoose - MongoDB object modeling for Node.js
 
 Built using Node.js, TypeScript, Redis, and MongoDB
+
+```
+## License
+
+[Prem](https://github.com/prem2230)
