@@ -11,7 +11,7 @@ import { rateLimitMiddleware } from './middlewares/rate-limit.middleware.js';
 const app = express();
 
 app.use(express.json({ limit: '10mb' }));
-app.use(rateLimitMiddleware(60000, 100));
+app.use(rateLimitMiddleware(config.rateLimit.windowMs, config.rateLimit.maxRequests));
 
 connectDB();
 

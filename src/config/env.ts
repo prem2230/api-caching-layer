@@ -1,18 +1,29 @@
 import dotenv from 'dotenv';
+import { IEnvConfig } from '../types/env-types';
 
 dotenv.config();
 
-export const config = {
-    port: process.env.PORT || 4000,
-    nodeEnv: process.env.NODE_ENV || 'development',
+// Use!(non - null assertion) to tell TypeScript these env vars will exist
+// Use Number() for port conversion(handles string to number properly)
+// Type assertion for nodeEnv to match the union type
+// Keep parseInt() for the cache values as you had them
+
+export const config: IEnvConfig = {
+    port: Number(process.env.PORT) || 4000,
+    nodeEnv: process.env.NODE_ENV,
     mongodb: {
-        uri: process.env.MONGO_URI || 'mongodb://localhost:27017/demo'
+        uri: process.env.MONGO_URI!
     },
     redis: {
-        url: process.env.REDIS_URL || 'redis://localhost:6379'
+        url: process.env.REDIS_URL!
     },
     cache: {
-        defaultTTL: parseInt(process.env.CACHE_DEFAULT_TTL || '1800'),
-        compressionThreshold: parseInt(process.env.CACHE_COMPRESSION_THRESHOLD || '1024')
+        defaultTTL: parseInt(process.env.CACHE_DEFAULT_TTL!),
+        compressionThreshold: parseInt(process.env.CACHE_COMPRESSION_THRESHOLD!)
+    },
+    apiBaseUrl: process.env.API_BASE_URL!,
+    rateLimit: {
+        windowMs: parseInt(process.env.RATE_LIMIT_WINDOW_MS!),
+        maxRequests: parseInt(process.env.RATE_LIMIT_MAX_REQUESTS!)
     }
 };
